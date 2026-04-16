@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpiceRack</title>
     <link rel="stylesheet" href="../static/style.css">
+    <!-- allows me to use a font from google -->
     <link href="https://googleapis.com" rel="stylesheet">
 </head>
 <!---->
@@ -26,14 +27,22 @@
             <div class="header-s-2">
                 <h1 class="sb-h2-title">Add Spices</h1>
             </div>
+            <!-- div wrapper for spice user input text area -->
             <div class="body-s-input">
-                <form action="/add_spices" method="post">
-                    <textarea id="spice-input" name="user-data" placeholder="I.e: sea salt, garlic powder, etc..."></textarea>
+                <form id="spice-form" action="/add_spices" method="post">
+                    <textarea id="spice-input" name="user_spice_add" placeholder="I.e: sea salt, garlic powder, etc..."></textarea>
                 </form>
             </div>
+            <!-- submit button in the form of a div element -->
             <div class="submit-box" role="button" tabindex="0" id="submit-box">
                 <h1 class="submit-text">Submit</h1>
             </div>
+            <!-- small javascript segment to make the previous div element into a proper button -->
+            <script>
+                document.getElementById('submit-box').onclick = function() {
+                    document.getElementById('spice-form').submit();
+                };
+            </script>
         </div>
     </div>
 </body>
