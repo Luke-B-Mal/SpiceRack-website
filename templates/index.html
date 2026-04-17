@@ -23,7 +23,24 @@
             <div class="header-s">
                 <h1 class="sb-title">Your Spices</h1>
             </div>
-            <div class="body-s"></div>
+            <div class="body-s">
+                <div class="spice-col-wrapper">
+                    <div class="spice-column">
+                        <ul>
+                            {% for spice in left_spices %}
+                                <li>{{ spice }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="spice-column">
+                        <ul>
+                            {% for spice in right_spices %}
+                                <li>{{ spice }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="header-s-2">
                 <h1 class="sb-h2-title">Add Spices</h1>
             </div>

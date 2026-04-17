@@ -1,5 +1,4 @@
 import sqlite3
-import flask
 from flask import Flask, request, redirect, render_template
 
 app = Flask(__name__)
@@ -15,10 +14,24 @@ def init_db():
 
 init_db()
 
-#allows for the route to the home page to be established.
+#allows for the route to the home page to be established. Also pushes the 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    conn = sqlite3.connect("user_spices.db")
+    c = conn.cursor()
+    #queries the database for the names of the spices currently in the database. If none [...]
+    c.execute("SELECT name FROM spices")
+    names_messy = c.fetchall()
+
+    user_spices = []
+    for name in names_messy:
+        user_spices.append(name[0])
+    conn.close()
+
+    mid = len(user_spices) // 2 + (len(user_spices) % 2)
+    left_spice = user_spices[:mid]
+    right_spice = user_spices[mid:]
+    return render_template("index.html", left_spices = left_spice, right_spices = right_spice)
 
 #connects the HTML input to this file
 @app.route("/add_spices", methods=['POST'])
