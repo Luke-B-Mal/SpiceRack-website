@@ -3,8 +3,8 @@ from flask import Flask, request, redirect, render_template
 
 app = Flask(__name__)
 
-#creates a database if it does not already exist in the files.
-def init_db():
+#creates the spice database if it does not already exist in the directory.
+def init_s_db():
     conn = sqlite3.connect("user_spices.db")
     c = conn.cursor()
     # Create a table if it doesn't exist
@@ -12,26 +12,55 @@ def init_db():
     conn.commit()
     conn.close()
 
-init_db()
+init_s_db()
+
+#creates the recipe database if it does not already exist in the directory.
+def init_r_db():
+    conn = sqlite3.connect("user_recipes.db")
+    c = conn.cursor()
+    # Create a table if it doesn't exist
+    c.execute('CREATE TABLE IF NOT EXISTS recipes (id INTEGER PRIMARY KEY, title TEXT, matched_spices TEXT)')
+    conn.commit()
+    conn.close()
+
+init_r_db()
 
 #allows for the route to the home page to be established. Also pushes the 
 @app.route("/")
 def index():
-    conn = sqlite3.connect("user_spices.db")
-    c = conn.cursor()
-    #queries the database for the names of the spices currently in the database. If none [...]
-    c.execute("SELECT name FROM spices")
-    names_messy = c.fetchall()
+    #queries the user spice database for the names of the spices currently in the database. If none [...]
+    conn_s = sqlite3.connect("user_spices.db")
+    c_s = conn_s.cursor()
+    c_s.execute("SELECT name FROM spices")
+    spice_names_messy = c_s.fetchall()
+    conn_s.close()
 
+    #acutally creates the list of spices from the SQL query before
     user_spices = []
-    for name in names_messy:
-        user_spices.append(name[0])
-    conn.close()
+    for spice_name in spice_names_messy:
+        user_spices.append(spice_name[0])
 
+    #splits the spices list into two parts where the left side will be the "favorites" column (required spices) later in production.
     mid = len(user_spices) // 2 + (len(user_spices) % 2)
     left_spice = user_spices[:mid]
     right_spice = user_spices[mid:]
-    return render_template("index.html", left_spices = left_spice, right_spices = right_spice)
+
+    #again, queries the user recipe database for the names of the recipes as well as the spices that the recipe uses that the user owns.
+    conn_r = sqlite3.connect("user_recipes.db")
+    c_r = conn_r.cursor()
+    c_r.execute("SELECT title, matched_spices FROM recipes")
+    recipe_rows = c_r.fetchall()
+    conn_r.close()
+
+    #creates a list of dictionaries for every observation of the database.
+    recipe = []
+    for obs in recipe_rows:
+        recipe.append({
+            "title": obs[0],
+            "spices": obs[1].split(",")
+        })
+
+    return render_template("index.html", left_spices = left_spice, right_spices = right_spice, recipes = recipe)
 
 #connects the HTML input to this file
 @app.route("/add_spices", methods=['POST'])

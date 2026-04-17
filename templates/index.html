@@ -17,7 +17,22 @@
             <div class="header-r">
                 <h1 class="rb-title">Your Recipes</h1>
             </div>
-            <div class="body-r"></div>
+            <div class="body-r">
+                <!-- creates a list of the titles of the Recipes in the "user_recipes.db" file where each of the titles is a clickable object-->
+                {% for recipe in recipes %}
+                <div class="recipe-item">
+                    <h3 class="recipe-item" onclick="openModal('{{ recipe.title }}')">
+                        {{ recipe.title }}
+                    </h3>
+                    <!-- creates a list of the spices present in the recipe that the user also has underneath the title -->
+                    <ul class="recipe-spices">
+                        {% for spices in recipe.spices %}
+                        <li>{{ spices.strip() }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         <div class="spice-box">
             <div class="header-s">
@@ -60,6 +75,15 @@
                     document.getElementById('spice-form').submit();
                 };
             </script>
+        </div>
+    </div>
+    <div id="recipe-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Recipe Details</h2>
+            <div id="modal-body">
+                <p>Details TBD...</p>
+            </div>
         </div>
     </div>
 </body>
