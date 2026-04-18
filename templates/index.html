@@ -11,7 +11,7 @@
 <!---->
 <body>
     <h1>Hello Beau! Welcome to <span class="italic-sr">SpiceRack</span>.</h1>
-    <h2>We're glad you're here.</h2>
+    <h2>Where Spice Drives the Culture.</h2>
     <div class="container">
         <div class="recipe-box">
             <div class="header-r">
@@ -21,8 +21,8 @@
                 <!-- creates a list of the titles of the Recipes in the "user_recipes.db" file where each of the titles is a clickable object-->
                 {% for recipe in recipes %}
                 <div class="recipe-item">
-                    <h3 class="recipe-item" onclick="openModal('{{ recipe.title }}')">
-                        {{ recipe.title }}
+                    <h3 class="recipe-title" data-title ="{{ recipe.title }}">
+                        – {{ recipe.title }}
                     </h3>
                     <!-- creates a list of the spices present in the recipe that the user also has underneath the title -->
                     <ul class="recipe-spices">
@@ -79,12 +79,37 @@
     </div>
     <div id="recipe-modal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
+            <span id="close-btn" class="close-button" onclick="closeModal()">&times;</span>
             <h2 id="modal-title">Recipe Details</h2>
             <div id="modal-body">
                 <p>Details TBD...</p>
             </div>
         </div>
     </div>
+    <!-- JavaScript that handles the on-click event for the recipe titles. -->
+    <script>
+        // handles the actual pop up window when the title is clicked.
+        function openModal(title) {
+            document.getElementById('recipe-modal').style.display = "block";
+            document.getElementById('modal-title').innerText = title;
+        }
+        // handles the closing of the window
+        function closeModal() {
+            document.getElementById('recipe-modal').style.display = "none";
+        }
+        // allows for the title of the recipe to be clicked on to open the window.
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('recipe-title')) {
+                const title = event.target.getAttribute('data-title');
+                openModal(title);
+            }
+            
+            // makes it so you are able to click outside of the window to close it.
+            let modal = document.getElementById('recipe-modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html
