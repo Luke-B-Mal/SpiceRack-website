@@ -2,7 +2,7 @@ async function openModal(title) {
     // pulls the elements from index.html which itself pulls from the app.py file which links the .db files to the website.
     const modal = document.getElementById('recipe-modal');
     const modalTitle = document.getElementById('modal-title');
-    const modalImg = document.getElementById("modal-img");
+    const modalImg = document.getElementById("modal-image");
     const ingList = document.getElementById("modal-ingredients");
     const stepList = document.getElementById("modal-steps");
 
@@ -18,7 +18,7 @@ async function openModal(title) {
     // pulls the data from the flask script via the element IDs in html.
     try {
         // handles cases where the title has an apostophe (would otherwise throw an error because the "'" in the title closes the quote).
-        const response = await fetch('/get_recipe_details/${encodeURIComponent(title)}');
+        const response = await fetch(`/get_recipe_details/${encodeURIComponent(title)}`);
         const data = await response.json();
 
         // converts the error message from one that would crash to one that can be handled later.
@@ -31,8 +31,8 @@ async function openModal(title) {
         }
 
         // loads the ingredients and the directions as a list of elements.
-        ingList.innerHTML = data.ingredients.map(item => '<li>${item.trim()}</li>').join('');
-        stepList.innerHTML = data.steps.map(item => '<li>${item.trim()}</li>').join('');
+        ingList.innerHTML = data.ingredients.map(item => `<li>${item.trim()}</li>`).join('');
+        stepList.innerHTML = data.directions.map(item => `<li>${item.trim()}</li>`).join('');
 
         // again, catches the error so the website doesnt crash.
     } catch (error) {

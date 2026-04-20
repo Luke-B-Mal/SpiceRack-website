@@ -26,10 +26,8 @@
                         – {{ recipe.title }}
                     </h3>
                     <!-- creates a list of the spices present in the recipe that the user also has underneath the title -->
-                    <ul class="recipe-spices">
-                        {% for spices in recipe.spices %}
-                        <li>{{ spices.strip() }}</li>
-                        {% endfor %}
+                    <ul class="recipe-category">
+                        <li>{{ recipe.category.strip() }}</li>
                     </ul>
                 </div>
                 {% endfor %}
