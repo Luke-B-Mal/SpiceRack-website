@@ -12,7 +12,6 @@
 <!---->
 <body>
     <h1>Hello Beau! Welcome to <span class="italic-sr">SpiceRack</span>.</h1>
-    <h2>Where Spice Drives the Culture.</h2>
     <div class="container">
         <div class="recipe-box">
             <div class="recipe-header-container">
@@ -28,9 +27,9 @@
                 {% for recipe in recipes %}
                 <div class="recipe-item">
                     <h3 class="recipe-title" data-title ="{{ recipe.title }}">
-                        – {{ recipe.title }}
+                        {{ recipe.title }}
                     </h3>
-                    <!-- creates a list of the spices present in the recipe that the user also has underneath the title -->
+                    <!-- represents the category of the recipe to be displayed under the title of the recipe -->
                     <ul class="recipe-category">
                         <li>{{ recipe.category.strip() }}</li>
                     </ul>
@@ -49,21 +48,19 @@
             </div>
             <div class="body-s">
                 <!-- remove this and replace with just "body-s", adjust the row layout into columns and squish the layout to the side -->
-                <div class="spice-col-wrapper"> 
-                    <div class="spice-column">
-                        <ul>
-                            {% for spice in left_spices %}
-                                <li>{{ spice }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="spice-column">
-                        <ul>
-                            {% for spice in right_spices %}
-                                <li>{{ spice }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                <div class="spice-column">
+                    <ul>
+                        {% for spice in left_spices %}
+                            <li>{{ spice }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="spice-column">
+                    <ul>
+                        {% for spice in right_spices %}
+                            <li>{{ spice }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             <div class="header-s-2">
