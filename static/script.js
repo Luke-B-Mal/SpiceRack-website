@@ -58,3 +58,25 @@ document.addEventListener('click', function(event) {
         closeModal();
     }
 });
+
+// handles the switching between "your spices" and "recommends"
+function switchTab(tabId, clickedElement) {
+
+    // clears the content of the current tab when it is switched away.
+    const allContents = document.querySelectorAll(".tab-content");
+    allContents.forEach(content => {
+        content.style.display = "none"
+    });
+
+    // gets rid of the highlight of the previous tab when another is selected
+    const allTabs = document.querySelectorAll('.recipe-header');
+    allTabs.forEach(tab => {
+        tab.classList.remove('active-tab');
+    });
+
+    // displays the proper div element when the tab title is clicked.
+    document.getElementById(tabId).style.display = 'flex';
+
+    // highlights the tab that was clicked.
+    clickedElement.classList.add('active-tab');
+}

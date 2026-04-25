@@ -15,10 +15,15 @@
     <h2>Where Spice Drives the Culture.</h2>
     <div class="container">
         <div class="recipe-box">
-            <div class="header-r">
-                <h1 class="rb-title">Your Recipes</h1>
+            <div class="recipe-header-container">
+                <div class="recipe-header active-tab" onclick="switchTab('your-recipes-content', this)">
+                    <h1 class="recipe-header-title">Your Recipes</h1>
+                </div>
+                <div class="recipe-header" onclick="switchTab('recommends-content', this)">
+                    <h1 class="recipe-header-title">Recommends</h1>
+                </div>
             </div>
-            <div class="body-r">
+            <div id="your-recipes-content" class="body-r tab-content">
                 <!-- creates a list of the titles of the Recipes in the "user_recipes.db" file where each of the titles is a clickable object-->
                 {% for recipe in recipes %}
                 <div class="recipe-item">
@@ -32,13 +37,19 @@
                 </div>
                 {% endfor %}
             </div>
+            <div id="recommends-content" class="body-r tab-content" style="display: none;">
+                <h3>
+                    recipes coming soon enough...
+                </h3>
+            </div>
         </div>
         <div class="spice-box">
             <div class="header-s">
                 <h1 class="sb-title">Your Spices</h1>
             </div>
             <div class="body-s">
-                <div class="spice-col-wrapper">
+                <!-- remove this and replace with just "body-s", adjust the row layout into columns and squish the layout to the side -->
+                <div class="spice-col-wrapper"> 
                     <div class="spice-column">
                         <ul>
                             {% for spice in left_spices %}
